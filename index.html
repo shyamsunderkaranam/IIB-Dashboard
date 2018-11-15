@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en" ng-app="RDash">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>IIB DASHBOARD</title>
+  <!-- STYLES -->
+  <link rel="stylesheet" href="lib/css/main.min.css"/>
+   <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/bttn.css/0.2.4/bttn.css">
+  <style>
+div div.button {
+    background-color: blue; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+</style>
+  <!-- SCRIPTS -->
+  <script src="lib/js/main.min.js"></script>
+  <!-- Custom Scripts -->
+  <script type="text/javascript" src="js/dashboard.min.js"></script>
+  
+</head>
+<body ng-controller="MasterCtrl">
+  <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <ul class="sidebar">
+        <li class="sidebar-main">
+          <a ng-click="toggleSidebar()">
+            Dashboard
+            <span class="menu-icon glyphicon glyphicon-transfer"></span>
+          </a>
+        </li>
+        <li class="sidebar-title">
+		<span style="color: white">List of Brokers</span></li>
+		<div ng-repeat="broker in brokerlist">
+			<!--<div ng-repeat="(key2,value) in dataSet">-->
+				<li class="sidebar-list" >
+					<a href="#"><button  class="sidebar-list" style="color: black" ng-click="openBroker(broker.id)" >{{broker.brokerName}}</button>
+						<!--<span class="menu-icon fa fa-table"></span>-->
+					</a>
+				</li>
+			<!--<div>-->
+		</div>
+      </ul>
+      <!--<div class="sidebar-footer">
+        <div class="col-xs-4">
+          <a href="https://github.com/rdash/rdash-angular" target="_blank">
+            Github
+          </a>
+        </div>
+        <div class="col-xs-4">
+          <a href="https://github.com/rdash/rdash-angular/blob/master/README.md" target="_blank">
+            About
+          </a>
+        </div>
+        <div class="col-xs-4">
+          <a href="#">
+            Support
+          </a>
+        </div>
+      </div> -->
+    </div>
+    <!-- End Sidebar -->
+
+    <div id="content-wrapper">
+      <div class="page-content">
+
+        <!-- Header Bar -->
+        <div class="row header">
+          <div class="col-xs-12">
+            <div class="user pull-right">
+              <div class="item dropdown">
+                <a href="#" class="dropdown-toggle">
+                  <img src="img/avatar.jpg">
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li class="dropdown-header">
+                    Joe Bloggs
+                  </li>
+                  <li class="divider"></li>
+                  <li class="link">
+                    <a href="#">
+                      Profile
+                    </a>
+                  </li>
+                  <li class="link">
+                    <a href="#">
+                      Menu Item
+                    </a>
+                  </li>
+                  <li class="link">
+                    <a href="#">
+                      Menu Item
+                    </a>
+                  </li>
+                  <li class="divider"></li>
+                  <li class="link">
+                    <a href="#">
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="item dropdown">
+               <a href="#" class="dropdown-toggle">
+                  <i class="fa fa-bell-o"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li class="dropdown-header">
+                    Notifications
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href="#">Server Down!</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="page">
+                Dashboard
+              </div>
+              <div class="breadcrumb-links">
+                Home / Dashboard
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Header Bar -->
+
+        <!-- Main Content -->
+       <!-- <div ui-view></div>-->
+   
+<div class="row" style="height: 46px;">
+	
+	<!-- jata -->
+	<div  ng-repeat="(key, dataSet) in bproperties">
+		<div class="col-lg-3 col-md-6 col-xs-12" style="width: 180px;" ng-repeat="(key2,value) in dataSet"> 
+			<button class="bttn-pill bttn-md bttn-success" ng-disabled="brokerOptions==!true" ng-click="openSpan()">{{value}}</button>
+		</div>
+	</div>
+	<!-- jata end -->
+</div>
+
+<div class="row" ng-if="valueReveal">
+	<div class="col-lg-6">
+		<rd-widget>
+				<div class="widget" ng-transclude="">
+					<rd-widget-header icon="fa-tasks" title="Values" class="ng-scope ng-isolate-scope"></rd-widget-header>
+					<rd-widget-body classes="medium no-padding" class="ng-scope ng-isolate-scope">
+						<div class="widget-body medium no-padding" ng-class="classes">
+							<rd-loading ng-show="loading" class="ng-hide">
+								<div class="loading">
+									<div class="double-bounce1"></div>
+									<div class="double-bounce2"></div>
+								</div>
+							</rd-loading>
+						<div ng-hide="loading" class="widget-content" ng-transclude="">
+							<div class="table-responsive ng-scope">
+								<table class="table">
+									<tbody>
+										<tr>
+											<td>RDVMPC001</td>
+											<td>238.103.133.37</td>
+											<td><span class="text-success"><i class="fa fa-check"></i></span></td>
+										</tr>
+										<tr>
+											<td>RDVMPC002</td>
+											<td>68.66.63.170</td>
+											<td><span class="text-success"><i class="fa fa-check"></i></span></td>
+										</tr>
+										<tr>
+											<td>RDVMPC003</td>
+											<td>76.117.212.33</td>
+											<td><span tooltip="Server Down!" class="text-danger ng-scope"><i class="fa fa-warning"></i></span></td>
+										</tr>
+										<tr>
+											<td>RDPHPC001</td>
+											<td>91.88.224.5</td>
+											<td><span class="text-success"><i class="fa fa-check"></i></span></td>
+										</tr>
+										<tr>
+											<td>RDESX001</td>
+											<td>197.188.15.93</td>
+											<td><span class="text-success"><i class="fa fa-check"></i></span></td>
+										</tr>
+										<tr>
+											<td>RDESX002</td>
+											<td>168.85.154.251</td>
+											<td><span class="text-success"><i class="fa fa-check"></i></span></td>
+										</tr>
+										<tr>
+											<td>RDESX003</td>
+											<td>209.25.191.61</td>
+											<td><span tooltip="Server Down!" class="text-danger ng-scope"><i class="fa fa-warning"></i></span></td>
+										</tr>
+										<tr>
+											<td>RDESX004</td>
+											<td>252.37.192.235</td>
+											<td><span class="text-success"><i class="fa fa-check"></i></span></td>
+										</tr>
+										<tr>
+											<td>RDTerminal01</td>
+											<td>139.71.18.207</td>
+											<td><span class="text-success"><i class="fa fa-check"></i></span></td>
+										</tr>
+										<tr>
+											<td>RDTerminal02</td>
+											<td>136.80.122.212</td>
+											<td><span tooltip="Could not connect!" class="text-warning ng-scope"><i class="fa fa-flash"></i></span></td>
+										</tr>
+										<tr>
+											<td>RDDomainCont01</td>
+											<td>196.80.245.33</td>
+											<td><span class="text-success"><i class="fa fa-check"></i></span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</rd-widget-body>
+			</div>
+		</rd-widget>
+	</div>
+</div>
+
+      </div><!-- End Page Content -->
+    </div><!-- End Content Wrapper -->
+  </div><!-- End Page Wrapper -->
+</body>
+</html>
