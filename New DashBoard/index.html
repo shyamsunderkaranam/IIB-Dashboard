@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>RDash AngularJS</title>
+	<title>IIB DASHBOARD</title>
   <!-- STYLES -->
   <link rel="stylesheet" href="lib/css/main.min.css"/>
    <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/bttn.css/0.2.4/bttn.css">
@@ -45,15 +45,16 @@ div div.button {
             <span class="menu-icon glyphicon glyphicon-transfer"></span>
           </a>
         </li>
-        <li class="sidebar-title"><span>NAVIGATION</span></li>
-		<div ng-repeat="(key, dataSet) in brokerlist">
-			<div ng-repeat="(key2,value) in dataSet">
+        <li class="sidebar-title">
+		<span style="color: white">List of Brokers</span></li>
+		<div ng-repeat="broker in brokerlist">
+			<!--<div ng-repeat="(key2,value) in dataSet">-->
 				<li class="sidebar-list" >
-					<a href="#"><button  class="sidebar-list"ng-click="openBroker()">{{value}}</button>
-						<span class="menu-icon fa fa-table"></span>
+					<a href="#"><button  class="sidebar-list" style="color: black" ng-click="openBroker(broker.id)" >{{broker.brokerName}}</button>
+						<!--<span class="menu-icon fa fa-table"></span>-->
 					</a>
 				</li>
-			<div>
+			<!--<div>-->
 		</div>
       </ul>
       <div class="sidebar-footer">
