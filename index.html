@@ -91,30 +91,13 @@ body.modal-open {
 		<div ng-repeat="broker in brokerlist">
 			<!--<div ng-repeat="(key2,value) in dataSet">-->
 				<li class="sidebar-list" >
-					<a href="#"><button  class="sidebar-list" style="color: black" ng-click="openBroker(broker.id)" >{{broker.brokerName}}</button>
+					<a href="#"><button  class="sidebar-list" style="color: black" ng-click="openMainRow(broker.id)" >{{broker.brokerName}}</button>
 						<!--<span class="menu-icon fa fa-table"></span>-->
 					</a>
 				</li>
 			<!--<div>-->
 		</div>
       </ul>
-      <!--<div class="sidebar-footer">
-        <div class="col-xs-4">
-          <a href="https://github.com/rdash/rdash-angular" target="_blank">
-            Github
-          </a>
-        </div>
-        <div class="col-xs-4">
-          <a href="https://github.com/rdash/rdash-angular/blob/master/README.md" target="_blank">
-            About
-          </a>
-        </div>
-        <div class="col-xs-4">
-          <a href="#">
-            Support
-          </a>
-        </div>
-      </div> -->
     </div>
     <!-- End Sidebar -->
 
@@ -189,194 +172,185 @@ body.modal-open {
         <!-- Main Content -->
        <!-- <div ui-view></div>-->
    
-<div class="row" style="height: 46px;" ng-if="brokerOptions==true">
-	
-	<!-- jata -->
-	<div>
-		<div class="col-lg-3 col-md-6 col-xs-12" style="width: 180px;"> 
-			<button class="bttn-pill bttn-md bttn-success"  ng-click="openQueue()">Queues</button>
-		</div>
-		<div class="col-lg-3 col-md-6 col-xs-12" style="width: 180px;"> 
-			<button class="bttn-pill bttn-md bttn-success"  ng-click="openChannel()">Channels</button>
-		</div>
-		<div class="col-lg-3 col-md-6 col-xs-12" style="width: 180px;"> 
-			<button class="bttn-pill bttn-md bttn-success"  ng-click="openAgent()">Troubleshooting</button>
-		</div>
-		<!-- <div class="col-lg-3 col-md-6 col-xs-12" style="width: 180px;"> 
-			<button class="bttn-pill bttn-md bttn-success"  ng-click="openListener()">Channel Troubleshooting</button>
-		</div> -->
-		<!-- <div class="col-lg-3 col-md-6 col-xs-12" style="width: 180px;"> 
-			<button class="bttn-pill bttn-md bttn-success"  ng-click="openEgStatus()">EG Status</button>
-    </div> -->
-      
-	</div>
-	<!-- jata end -->
-</div>
-
-<div class="row" ng-if="valueReveal">
-	<div class="col-lg-4" ng-if="openQM">
-		<rd-widget>
-				<div class="widget">
-					<rd-widget-header icon="fa-tasks" title="Queue List" class="ng-scope ng-isolate-scope"></rd-widget-header>
-					<rd-widget-body classes="medium no-padding" class="ng-scope ng-isolate-scope">
-						<div class="widget-body medium no-padding" ng-class="classes">
-							<rd-loading ng-show="loading" class="ng-hide">
-								<div class="loading">
-									<div class="double-bounce1"></div>
-									<div class="double-bounce2"></div>
-								</div>
-							</rd-loading>
-						<div ng-hide="loading" class="widget-content">
-							<div class="table-responsive ng-scope">
-								<table class="table">
-                  <tr>
-                    <td><p><input type="text" ></p></td>
-                  </tr>
-									<tbody >
-										<tr ng-repeat="q in propertyValue" ng-class="{'selected':$index == selectedRow}"ng-click="feelingblue($index)">
-											<td >{{q.qname }}</td>
-										</tr>	
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</rd-widget-body>
-			</div>
-		</rd-widget>
-  </div>
-  <div class="col-lg-6" ng-if="propertiesShown">
-      <rd-widget>
-          <div class="widget">
-            <rd-widget-header icon="fa-tasks" title="Properties" class="ng-scope ng-isolate-scope"></rd-widget-header>
-            <rd-widget-body classes="medium no-padding" class="ng-scope ng-isolate-scope">
-              <div class="widget-body medium no-padding" ng-class="classes">
-                <rd-loading ng-show="loading" class="ng-hide">
-                  <div class="loading">
-                    <div class="double-bounce1"></div>
-                    <div class="double-bounce2"></div>
-                  </div>
-                </rd-loading>
-              <div ng-hide="loading" class="widget-content">
-                <div class="table-responsive ng-scope">
-                  <table class="table">
-                    <!--<tbody ng-repeat="(key, dataSet) in queueDetails">-->
-                        <!-- <tr>
-                            <td>Inhibition</td>
-                            <td>True</td>
-                            <td><button class="bttn-gradient bttn-md bttn-primary">Allow</button></td>
-                            <td><button ng-click="openModal('custom-modal-1')">Open Modal 1</button></td>
-                          </tr> -->
-                    <tbody>
-                      <tr ng-repeat="(key2,value) in queueDetails">
-                        <td>{{key2 | keyFilter}}</td>
-                        <td>{{value}}</td>
-                        <td><span class="text-success"><i class="fa fa-check"></i></span></td>
-                      </tr>	
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+       <!-- Main Option Row Starts-->
+        <div class="row" style="height: 46px;" ng-if="brokerOptions==true" id="mainOptionRow">
+          
+          <div>
+            <div class="col-lg-3 col-md-6 col-xs-12" style="width: 180px;"> 
+              <button class="bttn-pill bttn-md bttn-success"  ng-click="openQueue()">Queues</button>
             </div>
-          </rd-widget-body>
-        </div>
-      </rd-widget>
-    </div>
-</div>
-<div class="row" ng-if="valueReveal">
-
-    <div class="col-lg-6" ng-if="openChn">
-        <rd-widget>
-            <div class="widget">
-              <rd-widget-header icon="fa-tasks" title="Channel Stats" class="ng-scope ng-isolate-scope"></rd-widget-header>
-              <rd-widget-body classes="medium no-padding" class="ng-scope ng-isolate-scope">
-                <div class="widget-body medium no-padding" ng-class="classes">
-                  <rd-loading ng-show="loading" class="ng-hide">
-                    <div class="loading">
-                      <div class="double-bounce1"></div>
-                      <div class="double-bounce2"></div>
-                    </div>
-                  </rd-loading>
-                <div ng-hide="loading" class="widget-content">
-                  <div class="table-responsive ng-scope">
-                    <table class="table">
-                      <!--<tbody ng-repeat="(key, dataSet) in channelStats">-->
-                      <tbody>
-                          <!-- <tr>
-                              <td>Inhibition</td>
-                              <td>True</td>
-                              <td><button class="bttn-gradient bttn-md bttn-primary">Allow</button></td>
-                              <td><button ng-click="openModal('custom-modal-1')">Open Modal 1</button></td>
-                            </tr> -->
-                        <tr ng-repeat="(key2,value) in channelStats">
-                          <td>{{key2}}</td>
-                          <td>{{value}}</td>
-                          <td><span class="text-success"><i class="fa fa-check"></i></span></td>
-                        </tr>	
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </rd-widget-body>
+            <div class="col-lg-3 col-md-6 col-xs-12" style="width: 180px;"> 
+              <button class="bttn-pill bttn-md bttn-success"  ng-click="openChannel()">Channels</button>
+            </div>
+            <div class="col-lg-3 col-md-6 col-xs-12" style="width: 180px;"> 
+              <button class="bttn-pill bttn-md bttn-success"  ng-click="openTroubleShoot()">Troubleshooting</button>
+            </div>   
           </div>
-        </rd-widget>
-      </div>
-</div>
-
-<div class="row" ng-if="valueReveal">
-
-    <div class="col-lg-6" ng-if="openTroub">
-        <rd-widget>
-            <div class="widget">
-              <rd-widget-header icon="fa-tasks" title="Problematic Queues" class="ng-scope ng-isolate-scope"></rd-widget-header>
-              <rd-widget-body classes="medium no-padding" class="ng-scope ng-isolate-scope">
-                <div class="widget-body medium no-padding" ng-class="classes">
-                  <rd-loading ng-show="loading" class="ng-hide">
-                    <div class="loading">
-                      <div class="double-bounce1"></div>
-                      <div class="double-bounce2"></div>
-                    </div>
-                  </rd-loading>
-                <div ng-hide="loading" class="widget-content">
-                  <div class="table-responsive ng-scope">
-                    <h4 ng-if="pFlag && openTroub">Please report to IIB Support team</h4><br />
-                    <table class="table">
-                      <tbody">
-                      <!--<tbody  ng-repeat="(key, dataSet) in problemQueues>-->
-                          <!-- <tr>
-                              <td>Inhibition</td>
-                              <td>True</td>
-                              <td><button class="bttn-gradient bttn-md bttn-primary">Allow</button></td>
-                              <td><button ng-click="openModal('custom-modal-1')">Open Modal 1</button></td>
-                            </tr> -->
-                        <tr ng-repeat="key1 in problemQueues">
-                          <td>{{key1.qname}}</td>
-                          <!-- <td ng-show="test1!=null">{{value1}}</td> -->
-                        </tr>	
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </rd-widget-body>
-          </div>
-        </rd-widget>
-      </div>
-</div>
-
-<modal id="custom-modal-1">
-    <div class="modal">
-        <div class="modal-body">
-            <h1>A Custom Modal!</h1>
-            <p>
-                Home page text: <input type="text" [(ngModel)]="bodyText" />
-            </p>
-            <button (click)="closeModal('custom-modal-1');">Close</button>
         </div>
-    </div>
-    <div class="modal-background"></div>
-</modal>
+        <!-- Main Option Row Ends-->
+
+        <!-- Queue Status Block -->
+        <div class="row" ng-if="valueReveal" id="queueStatusBlock">
+          <div class="col-lg-4 row-lg-12" ng-if="openQM">
+            <rd-widget>
+                <div class="widget">
+                  <rd-widget-header icon="fa-tasks" title="Queue List" class="ng-scope ng-isolate-scope">
+                      <select ng-model="selected" ng-options="t.queueType for t in typeOfQueues"  ng-change="callQueueSubtype(selected.queueType)">
+                          <option value="">Select Queue Type</option>
+                      </select>
+                  </rd-widget-header>
+                  <rd-widget-body classes="medium no-padding" class="ng-scope ng-isolate-scope" ng-if="showQueueDropDwn">
+                    <div class="widget-body medium no-padding" ng-class="classes">
+                      <rd-loading ng-show="loading" class="ng-hide">
+                        <div class="loading">
+                          <div class="double-bounce1"></div>
+                          <div class="double-bounce2"></div>
+                        </div>
+                      </rd-loading>
+                    <div ng-hide="loading" class="widget-content">
+                      <div class="table-responsive ng-scope">
+                        <table class="table">
+                          <tr>
+                            <td><p><input type="text" ></p></td>
+                          </tr>
+                          <tbody>
+                            <tr ng-repeat="q in propertyValue" ng-class="{'selected':$index == selectedRow}"ng-click="queueDesc($index)">
+                              <td >{{q}}</td>
+                            </tr>	
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </rd-widget-body>
+              </div>
+            </rd-widget>
+          </div>
+          <div class="col-lg-6" ng-if="propertiesShown">
+              <rd-widget>
+                  <div class="widget">
+                    <rd-widget-header icon="fa-tasks" title="Properties" class="ng-scope ng-isolate-scope"></rd-widget-header>
+                    <rd-widget-body classes="medium no-padding" class="ng-scope ng-isolate-scope">
+                      <div class="widget-body medium no-padding" ng-class="classes">
+                        <rd-loading ng-show="loading" class="ng-hide">
+                          <div class="loading">
+                            <div class="double-bounce1"></div>
+                            <div class="double-bounce2"></div>
+                          </div>
+                        </rd-loading>
+                      <div ng-hide="loading" class="widget-content">
+                        <div class="table-responsive ng-scope">
+                          <table class="table">
+                            <!--<tbody ng-repeat="(key, dataSet) in queueDetails">-->
+                                <!-- <tr>
+                                    <td>Inhibition</td>
+                                    <td>True</td>
+                                    <td><button class="bttn-gradient bttn-md bttn-primary">Allow</button></td>
+                                    <td><button ng-click="openModal('custom-modal-1')">Open Modal 1</button></td>
+                                  </tr> -->
+                            <tbody>
+                              <tr ng-repeat="(key2,value) in queueDetails">
+                                <td>{{key2 | keyFilter}}</td>
+                                <td>{{value}}</td>
+                                <!--<td><span class="text-success"><i class="fa fa-check"></i></span></td>-->
+                              </tr>	
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </rd-widget-body>
+                </div>
+              </rd-widget>
+            </div>
+        </div>
+        <!-- Queue Status Block End-->
+
+        <!-- Channel Status Block -->
+        <div class="row" ng-if="valueReveal" id="channelStatusBlock">
+
+            <div class="col-lg-6" ng-if="openChn">
+                <rd-widget>
+                    <div class="widget">
+                      <rd-widget-header icon="fa-tasks" title="Channel Stats" class="ng-scope ng-isolate-scope"></rd-widget-header>
+                      <rd-widget-body classes="medium no-padding" class="ng-scope ng-isolate-scope">
+                        <div class="widget-body medium no-padding" ng-class="classes">
+                          <rd-loading ng-show="loading" class="ng-hide">
+                            <div class="loading">
+                              <div class="double-bounce1"></div>
+                              <div class="double-bounce2"></div>
+                            </div>
+                          </rd-loading>
+                        <div ng-hide="loading" class="widget-content">
+                          <div class="table-responsive ng-scope">
+                            <table class="table">
+                              <!--<tbody ng-repeat="(key, dataSet) in channelStats">-->
+                              <tbody>
+                                  <!-- <tr>
+                                      <td>Inhibition</td>
+                                      <td>True</td>
+                                      <td><button class="bttn-gradient bttn-md bttn-primary">Allow</button></td>
+                                      <td><button ng-click="openModal('custom-modal-1')">Open Modal 1</button></td>
+                                    </tr> -->
+                                <tr ng-repeat="(key2,value) in channelStats">
+                                  <td>{{key2}}</td>
+                                  <td>{{value}}</td>
+                                  <!-- <td><span class="text-success"><i class="fa fa-check"></i></span></td> -->
+                                </tr>	
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </rd-widget-body>
+                  </div>
+                </rd-widget>
+              </div>
+        </div>
+        <!-- Channel Status Block End-->
+
+        <!-- TroubleShoot Block -->
+        <div class="row" ng-if="valueReveal && openTroub" id="troubleShootBlock">
+
+            <div class="col-lg-6">
+                <rd-widget>
+                    <div class="widget">
+                      <rd-widget-header icon="fa-tasks" title="Problematic Queues" class="ng-scope ng-isolate-scope"></rd-widget-header>
+                      <rd-widget-body classes="medium no-padding" class="ng-scope ng-isolate-scope">
+                        <div class="widget-body medium no-padding" ng-class="classes">
+                          <rd-loading ng-show="loading" class="ng-hide">
+                            <div class="loading">
+                              <div class="double-bounce1"></div>
+                              <div class="double-bounce2"></div>
+                            </div>
+                          </rd-loading>
+                        <div ng-hide="loading" class="widget-content">
+                          <div class="table-responsive ng-scope">
+                            <h4 ng-if="pFlag && openTroub">Please report to IIB Support team</h4><br />
+                            <table class="table">
+                              <tbody">
+                              <!--<tbody  ng-repeat="(key, dataSet) in problemQueues>-->
+                                  <!-- <tr>
+                                      <td>Inhibition</td>
+                                      <td>True</td>
+                                      <td><button class="bttn-gradient bttn-md bttn-primary">Allow</button></td>
+                                      <td><button ng-click="openModal('custom-modal-1')">Open Modal 1</button></td>
+                                    </tr> -->
+                                <tr ng-repeat="key1 in problemQueues">
+                                  <td>{{key1.qname}}</td>
+                                  <!-- <td ng-show="test1!=null">{{value1}}</td> -->
+                                </tr>	
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </rd-widget-body>
+                  </div>
+                </rd-widget>
+              </div>
+        </div>
+        <!-- TroubleShoot Block -->
 
       </div><!-- End Page Content -->
     </div><!-- End Content Wrapper -->
