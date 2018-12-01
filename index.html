@@ -280,6 +280,14 @@
                                       <td ng-if="putInhibitflag"><button class="bttn-gradient bttn-md bttn-primary" ng-click="allowQueuePut(qname)">Allow</button></td>
                                       <!-- <td ng-show="test1!=null">{{value1}}</td> -->
                                     </tr>	
+                                    <tr>
+                                        <th>Channels in Stopped State</th>
+                                      </tr>
+                                      <tr ng-repeat="chnl in channelsStopped track by $index">
+                                        <td>{{chnl}}</td>
+                                        <td ng-if="chnlStopped"><button class="bttn-gradient bttn-md bttn-primary" ng-click="restartChannel(chnl)">Start</button></td>
+                                        <!-- <td ng-show="test1!=null">{{value1}}</td> -->
+                                      </tr>	
                               </tbody>
                             </table>
                           </div>
