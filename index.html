@@ -7,10 +7,10 @@
 	<title>IIB DASHBOARD</title>
   <!-- STYLES -->
   <link rel="stylesheet" href="lib/css/main.min.css"/>
-   <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/bttn.css/0.2.4/bttn.css">
-   <link rel="stylesheet" type="text/css" href="lib/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="lib/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="lib/css/styles.css">
+  <link rel ="stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/bttn.css/0.2.4/bttn.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/styles.css">
 
   
   <!-- SCRIPTS -->
@@ -24,7 +24,12 @@
           color:rgb(255, 255, 255);
           font-weight:bold;
       }
-      </style>
+      .color-red {
+          background-color: rgb(255, 112, 77);
+          color:black;
+          font-weight:bold;
+      }
+  </style>
   
 </head>
 <body ng-controller="MasterCtrl">
@@ -132,7 +137,7 @@
 						<input type="text" ng-model="search" class="form-control" placeholder="Search">
 					</div>
 				</form>
-				<table class="table table-striped table-hover alert alert-info" ng-if="propertiesShown">
+				<table class="table table-hover alert alert-info" ng-if="propertiesShown">
 					<thead>
 						<tr>
 							<th ng-click="sort('qName')">Queue Name
@@ -154,22 +159,22 @@
 							<th ng-click="sort('MaximumDepth')">Maximum Messages can be stored
 								<span class="glyphicon sort-icon" ng-show="sortKey=='MaximumDepth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
 							</th>
-							<th ng-click="sort('Description')">Queue Description
-								<span class="glyphicon sort-icon" ng-show="sortKey=='Description'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							<th ng-click="sort('CurrentDepth')">No. of Messages Stuck in Queue
+								<span class="glyphicon sort-icon" ng-show="sortKey=='CurrentDepth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
 							</th>
 							
 						</tr>
 					</thead>
 					<tbody>
-						<tr dir-paginate="q in propertyValue|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
+						<tr ng-class="{'color-red': (q.InhibitPut === 'No' || q.InhibitGet === 'No' || q.OpenInputCount === 0)}" dir-paginate="q in propertyValue|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
 						
 							<td>{{q.qName}}</td>
-							<td>{{q.InhibitPut}}</td>
+							<td  >{{q.InhibitPut}}</td>
 							<td>{{q.InhibitGet}}</td>
 							<td>{{q.OpenInputCount}}</td>
 							<td>{{q.MaximumMessageLength}}</td>
 							<td>{{q.MaximumDepth}}</td>
-							<td>{{q.Description}}</td>
+							<td>{{q.CurrentDepth}}</td>
 						</tr>
 					</tbody>
 				</table> 
