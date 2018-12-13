@@ -12,7 +12,6 @@
   <link rel="stylesheet" type="text/css" href="lib/css/bootstrap-theme.min.css">
   <link rel="stylesheet" type="text/css" href="lib/css/styles.css">
 
-  
   <!-- SCRIPTS -->
   <script src="lib/js/main.min.js"></script>
   <!-- Custom Scripts -->
@@ -44,19 +43,35 @@
           </a>
         </li>
         <li class="sidebar-title">
-        <span style="color: white">List of Queue Managers</span></li>
-        <div ng-repeat="broker in brokerlist">
-          <!--<div ng-repeat="(key2,value) in dataSet">-->
-            <li class="sidebar-list" >
-              <a ng-click="openMainRow(broker.id)">
-                <!--<button  class="sidebar-list" style="color: black" ng-click="openMainRow(broker.id)" >{{broker.brokerName}}</button>-->
-                <button  class="btn btn-md btn-info ng-scope" style="color: black"  >{{broker.brokerName}}</button>  
-                <span class="menu-icon fa fa-tachometer"></span><br />
-                <!--<span class="menu-icon fa fa-table"></span>-->
-              </a>
-            </li>
-          <!--<div>-->
+            <span style="color: white">List of Queue Managers</span>
+        </li>
+        
+
+        <div class="sidebar-list">   
+            <a ng-click="openTierList(1)">F TIER<span class="menu-icon fa fa-table"></span></a>
+            <div  ng-if="tierList" ng-repeat="broker in brokerlist">
+                <!--<div ng-repeat="(key2,value) in dataSet">-->
+                  <li class="sidebar-list" >
+                    <a ng-click="openMainRow(broker.id)">
+                      <!--<button  class="sidebar-list" style="color: black" ng-click="openMainRow(broker.id)" >{{broker.brokerName}}</button>-->
+                      <button  class="btn btn-md btn-info ng-scope" style="color: black"  >{{broker.brokerName}}</button>  
+                      <span class="menu-icon fa fa-tachometer"></span><br />
+                      <!--<span class="menu-icon fa fa-table"></span>-->
+                    </a>
+                  </li>
+                <!--<div>-->
+              </div>   
         </div>
+        
+        
+
+        
+        
+
+       
+
+
+
         <li class="sidebar-list">
           <a ng-click="openUsefulLinks()">Some Useful Links <span class="menu-icon fa fa-table"></span></a>
         </li>
