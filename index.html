@@ -48,8 +48,12 @@
         
 
         <div class="sidebar-list">   
-            <a ng-click="openTierListF(1)">F TIER<span class="menu-icon fa fa-table"></span></a>
-            <div  ng-if="tierListF" ng-repeat="broker in brokerlist">
+		
+			<li class="sidebar-list" ng-repeat="t in queueManagerEnvs">
+			<span style="color: white">{{t.tier}} Tier</span>
+			</li>
+            <!--<a ng-repeat="t in queueManagerEnvs" ng-click="openTierListF(1)">{{t.tier}}<span class="menu-icon fa fa-table"></span></a><br> <br>-->
+            <div  ng-if="tierListF" ng-repeat="broker in queueManagersList">
                 <!--<div ng-repeat="(key2,value) in dataSet">-->
                   <li class="sidebar-list" >
                     <a ng-click="openMainRow(broker.id)">
@@ -62,30 +66,6 @@
                 <!--<div>-->
               </div>   
         </div>
-        <div class="sidebar-list">   
-          <a ng-click="openTierListV(2)">V TIER<span class="menu-icon fa fa-table"></span></a>
-          <div  ng-if="tierListV" ng-repeat="broker in brokerlist">
-              <!--<div ng-repeat="(key2,value) in dataSet">-->
-                <li class="sidebar-list" >
-                  <a ng-click="openMainRow(broker.id)">
-                    <!--<button  class="sidebar-list" style="color: black" ng-click="openMainRow(broker.id)" >{{broker.brokerName}}</button>-->
-                    <button  class="btn btn-md btn-info ng-scope" style="color: black"  >{{broker.brokerName}}</button>  
-                    <span class="menu-icon fa fa-tachometer"></span><br />
-                    <!--<span class="menu-icon fa fa-table"></span>-->
-                  </a>
-                </li>
-              <!--<div>-->
-            </div>   
-      </div>
-        
-        
-
-        
-        
-
-       
-
-
 
         <li class="sidebar-list">
           <a ng-click="openUsefulLinks()">Some Useful Links <span class="menu-icon fa fa-table"></span></a>
