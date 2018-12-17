@@ -28,6 +28,12 @@
           color:black;
           font-weight:bold;
       }
+      .color-green {
+          background-color: greenyellow;
+          color:black;
+          font-weight:bold;
+      }
+      
   </style>
   
 </head>
@@ -55,9 +61,9 @@
             <span style="color: white">{{t.tier}} Tier</span>
             </a>
             <div ng-show="t.expandable" ng-repeat="qm in t.QMs" class="sidebar-list" >
-              <a ng-click="openMainRow(broker.id)">
+              <a ng-click="openMainRow(qm.qmName)">
                 <!--<button  class="sidebar-list" style="color: black" ng-click="openMainRow(broker.id)" >{{broker.brokerName}}</button>-->
-                <button  class="btn btn-md btn-info ng-scope" style="color: black">{{qm.qmName}}</button>  
+                <button class="btn btn-md btn-info ng-scope" style="color: black">{{qm.qmName}}</button>  
                 <!--<span class="menu-icon fa fa-tachometer"></span><br />-->
                 <!--<span class="menu-icon fa fa-table"></span>-->
               </a>
@@ -177,7 +183,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-class="{'color-red': (q.InhibitPut === 'No' || q.InhibitGet === 'No' || q.OpenInputCount === 0)}" dir-paginate="q in propertyValue|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
+						<tr ng-class="{'color-red': (q.InhibitPut === 'Yes' || q.InhibitGet === 'Yes' || q.OpenInputCount === 0 || q.CurrentDepth > 0), 
+                'color-green': (q.InhibitPut === 'No' && q.InhibitGet === 'No' && q.OpenInputCount > 0 && q.CurrentDepth === 0)}" dir-paginate="q in propertyValue|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
 						
 							<td>{{q.qName}}</td>
 							<td  >{{q.InhibitPut}}</td>
