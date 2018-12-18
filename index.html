@@ -12,9 +12,15 @@
   <link rel="stylesheet" type="text/css" href="lib/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="lib/css/bootstrap-theme.min.css">
   <link rel="stylesheet" type="text/css" href="lib/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/loading-bar.css"> 
+<!--<link rel='stylesheet' href='http://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css' type='text/css' media='all' />-->
+  
+  <!--<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>-->
 
   <!-- SCRIPTS -->
   <script src="lib/js/main.min.js"></script>
+  <script src="lib/js/loading-bar.min.js"></script>
+  <script src="lib/js/angular-animate.js"></script>
   <!-- Custom Scripts -->
   <script type="text/javascript" src="js/dashboard.min.js"></script>
   <script src="lib/js/dirPagination.js"></script>
@@ -167,7 +173,7 @@
               </thead>
               <tbody>
                 <tr ng-class="{'color-red': (q.InhibitPut === 'Yes' || q.InhibitGet === 'Yes' || q.OpenInputCount === 0 || q.CurrentDepth > 0), 
-                'color-green': (q.InhibitPut === 'No' && q.InhibitGet === 'No' && q.OpenInputCount > 0 && q.CurrentDepth === 0)}"
+                'color-green': (q.InhibitPut === 'No' && q.InhibitGet === 'No' && (q.OpenInputCount === 'Not Applicable' || q.OpenInputCount > 0) && (q.CurrentDepth === 'Not Applicable' || q.CurrentDepth === 0))}"
                   dir-paginate="q in propertyValue|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
 
                   <td>{{q.qName}}</td>
