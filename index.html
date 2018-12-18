@@ -1,13 +1,14 @@
 <!doctype html>
 <html lang="en" ng-app="RDash">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>IIB DASHBOARD</title>
+  <title>IIB DASHBOARD</title>
   <!-- STYLES -->
-  <link rel="stylesheet" href="lib/css/main.min.css"/>
-  <link rel ="stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/bttn.css/0.2.4/bttn.css">
+  <link rel="stylesheet" href="lib/css/main.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bttn.css/0.2.4/bttn.css">
   <link rel="stylesheet" type="text/css" href="lib/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="lib/css/bootstrap-theme.min.css">
   <link rel="stylesheet" type="text/css" href="lib/css/styles.css">
@@ -18,25 +19,27 @@
   <script type="text/javascript" src="js/dashboard.min.js"></script>
   <script src="lib/js/dirPagination.js"></script>
   <style>
-      .selected {
-          background-color:rgb(130, 90, 221);
-          color:rgb(255, 255, 255);
-          font-weight:bold;
-      }
-      .color-red {
-          background-color: rgb(255, 112, 77);
-          color:black;
-          font-weight:bold;
-      }
-      .color-green {
-          background-color: greenyellow;
-          color:black;
-          font-weight:bold;
-      }
-      
+    .selected {
+      background-color: rgb(130, 90, 221);
+      color: rgb(255, 255, 255);
+      font-weight: bold;
+    }
+
+    .color-red {
+      background-color: rgb(255, 112, 77);
+      color: black;
+      font-weight: bold;
+    }
+
+    .color-green {
+      background-color: greenyellow;
+      color: black;
+      font-weight: bold;
+    }
   </style>
-  
+
 </head>
+
 <body ng-controller="MasterCtrl">
   <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
     <!-- Sidebar -->
@@ -49,31 +52,18 @@
           </a>
         </li>
         <li class="sidebar-title">
-            <span style="color: white">List of Queue Managers</span>
+          <span style="color: white">List of Queue Managers</span>
         </li>
-        
-
-        
-          
         <li class="sidebar-list" ng-repeat="t in queueManagerEnvs">
-		
-            <a href="#" ng-click="openTier($index)">
+          <a href="#" ng-click="openTier($index)">
             <span style="color: white">{{t.tier}} Tier</span>
+          </a>
+          <div ng-show="t.expandable" ng-repeat="qm in t.QMs" class="sidebar-list">
+            <a ng-click="openMainRow(qm.qmName)">
+              <button class="btn btn-md btn-info ng-scope" style="color: black">{{qm.qmName}}</button>
             </a>
-            <div ng-show="t.expandable" ng-repeat="qm in t.QMs" class="sidebar-list" >
-              <a ng-click="openMainRow(qm.qmName)">
-                <!--<button  class="sidebar-list" style="color: black" ng-click="openMainRow(broker.id)" >{{broker.brokerName}}</button>-->
-                <button class="btn btn-md btn-info ng-scope" style="color: black">{{qm.qmName}}</button>  
-                <!--<span class="menu-icon fa fa-tachometer"></span><br />-->
-                <!--<span class="menu-icon fa fa-table"></span>-->
-              </a>
-            </div>
-                 
+          </div>
         </li>
-            <!--<a ng-repeat="t in queueManagerEnvs" ng-click="openTierListF(1)">{{t.tier}}<span class="menu-icon fa fa-table"></span></a><br> <br>-->
-            
-        
-
         <li class="sidebar-list">
           <a ng-click="openUsefulLinks()">Some Useful Links <span class="menu-icon fa fa-table"></span></a>
         </li>
@@ -85,11 +75,9 @@
       <div class="page-content">
 
         <!-- Header Bar -->
-		 
         <div class="row header">
           <div class="col-xs-12">
             <div class="user pull-right">
-
             </div>
             <div class="meta">
               <div class="page">
@@ -101,218 +89,196 @@
             </div>
           </div>
         </div>
-		
         <!-- End Header Bar -->
 
         <!-- Main Content -->
         <div class="row" ng-if="openLinks">
-            <div class="col-lg-6">
-              <rd-widget>
-                <rd-widget-header icon="fa-tasks" title="Useful links">
-                  
-                </rd-widget-header>
-                <rd-widget-body classes="medium no-padding">
-                  <div class="table-responsive">
-                    <ul>
-                      <li ng-repeat="lnk in usefulLinks">
-                        <a ng-href="{{lnk.actualLink}}" target="_blank">{{lnk.linkName}}</a>
+          <div class="col-lg-6">
+            <rd-widget>
+              <rd-widget-header icon="fa-tasks" title="Useful links">
+              </rd-widget-header>
+              <rd-widget-body classes="medium no-padding">
+                <div class="table-responsive">
+                  <ul>
+                    <li ng-repeat="lnk in usefulLinks">
+                      <a ng-href="{{lnk.actualLink}}" target="_blank">{{lnk.linkName}}</a>
+                    </li>
+                  </ul>
+                </div>
+              </rd-widget-body>
+            </rd-widget>
+          </div>
+        </div>
 
-                      </li>
-                    </ul>
-          
-                  </div>      
-                </rd-widget-body>
-              </rd-widget>
-             </div>
-           </div>
-   
-       <!-- Main Option Row Starts-->
+        <!-- Main Option Row Starts-->
         <div class="row" style="height: 46px;" ng-if="brokerOptions==true" id="mainOptionRow">
-          
           <div>
-            <div class="col-lg-3 col-md-6 col-xs-12" style="width: 180px;"> 
-              <button class="bttn-pill bttn-md bttn-success"  ng-click="queueDesc()">Queues</button>
+            <div class="col-lg-3 col-md-6 col-xs-12" style="width: 180px;">
+              <button class="bttn-pill bttn-md bttn-success" ng-click="queueDesc()">Queues</button>
             </div>
-            <div class="col-lg-3 col-md-6 col-xs-12" style="width: 180px;"> 
-              <button class="bttn-pill bttn-md bttn-success"  ng-click="openChannel()">Channels</button>
+            <div class="col-lg-3 col-md-6 col-xs-12" style="width: 180px;">
+              <button class="bttn-pill bttn-md bttn-success" ng-click="openChannel()">Channels</button>
             </div>
-            <div class="col-lg-3 col-md-6 col-xs-12" style="width: 180px;"> 
-              <button class="bttn-pill bttn-md bttn-success"  ng-click="openTroubleShoot()">Troubleshooting</button>
-            </div>   
+            <div class="col-lg-3 col-md-6 col-xs-12" style="width: 180px;">
+              <button class="bttn-pill bttn-md bttn-success" ng-click="openTroubleShoot()">Troubleshooting</button>
+            </div>
           </div>
         </div>
         <!-- Main Option Row Ends-->
-        
+
 
         <!-- Queue Status Block Start-->
-		<div class="col-lg-12" ng-if="valueReveal && propertiesShown">
-			<div class="bs-component" >
-				
-				<form class="form-inline">
-					<div class="form-group">
-						<label >Search</label>
-						<input type="text" ng-model="search" class="form-control" placeholder="Search">
-					</div>
-				</form>
-				<table class="table table-hover alert alert-info" ng-if="propertiesShown">
-					<thead>
-						<tr>
-							<th ng-click="sort('qName')">Queue Name
-								<span class="glyphicon sort-icon" ng-show="sortKey=='qName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-							</th>
-							<th ng-click="sort('InhibitPut')">Incoming flow Stopped ?
-								<span class="glyphicon sort-icon" ng-show="sortKey=='InhibitPut'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-							</th>
-							<th ng-click="sort('InhibitGet')">Outgoing flow Stopped ?
-								<span class="glyphicon sort-icon" ng-show="sortKey=='InhibitGet'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-							</th>
-							<th ng-click="sort('OpenInputCount')">No of Applns reading this Queue
-								<span class="glyphicon sort-icon" ng-show="sortKey=='OpenInputCount'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-							</th>
-							<th ng-click="sort('MaximumMessageLength')">Maximum Message Length 
-								<span class="glyphicon sort-icon" ng-show="sortKey=='MaximumMessageLength'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-							</th>
+        <div class="col-lg-12" ng-if="valueReveal && propertiesShown">
+          <div class="bs-component">
 
-							<th ng-click="sort('MaximumDepth')">Maximum Messages can be stored
-								<span class="glyphicon sort-icon" ng-show="sortKey=='MaximumDepth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-							</th>
-							<th ng-click="sort('CurrentDepth')">No. of Messages Stuck in Queue
-								<span class="glyphicon sort-icon" ng-show="sortKey=='CurrentDepth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-							</th>
-							
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-class="{'color-red': (q.InhibitPut === 'Yes' || q.InhibitGet === 'Yes' || q.OpenInputCount === 0 || q.CurrentDepth > 0), 
-                'color-green': (q.InhibitPut === 'No' && q.InhibitGet === 'No' && q.OpenInputCount > 0 && q.CurrentDepth === 0)}" dir-paginate="q in propertyValue|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
-						
-							<td>{{q.qName}}</td>
-							<td  >{{q.InhibitPut}}</td>
-							<td>{{q.InhibitGet}}</td>
-							<td>{{q.OpenInputCount}}</td>
-							<td>{{q.MaximumMessageLength}}</td>
-							<td>{{q.MaximumDepth}}</td>
-							<td>{{q.CurrentDepth}}</td>
-						</tr>
-					</tbody>
-				</table> 
-				<dir-pagination-controls
-					max-size="10"
-					direction-links="true"
-					boundary-links="true" >
-				</dir-pagination-controls>
-			</div>
-		</div>
+            <form class="form-inline">
+              <div class="form-group">
+                <label>Search</label>
+                <input type="text" ng-model="search" class="form-control" placeholder="Search">
+              </div>
+            </form>
+            <table class="table table-hover alert alert-info" ng-if="propertiesShown">
+              <thead>
+                <tr>
+                  <th ng-click="sort('qName')">Queue Name
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='qName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                  </th>
+                  <th ng-click="sort('InhibitPut')">Incoming flow Stopped ?
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='InhibitPut'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                  </th>
+                  <th ng-click="sort('InhibitGet')">Outgoing flow Stopped ?
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='InhibitGet'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                  </th>
+                  <th ng-click="sort('OpenInputCount')">No of Applns reading this Queue
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='OpenInputCount'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                  </th>
+                  <th ng-click="sort('MaximumMessageLength')">Maximum Message Length
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='MaximumMessageLength'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                  </th>
+
+                  <th ng-click="sort('MaximumDepth')">Maximum Messages can be stored
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='MaximumDepth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                  </th>
+                  <th ng-click="sort('CurrentDepth')">No. of Messages Stuck in Queue
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='CurrentDepth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                  </th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-class="{'color-red': (q.InhibitPut === 'Yes' || q.InhibitGet === 'Yes' || q.OpenInputCount === 0 || q.CurrentDepth > 0), 
+                'color-green': (q.InhibitPut === 'No' && q.InhibitGet === 'No' && q.OpenInputCount > 0 && q.CurrentDepth === 0)}"
+                  dir-paginate="q in propertyValue|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
+
+                  <td>{{q.qName}}</td>
+                  <td>{{q.InhibitPut}}</td>
+                  <td>{{q.InhibitGet}}</td>
+                  <td>{{q.OpenInputCount}}</td>
+                  <td>{{q.MaximumMessageLength}}</td>
+                  <td>{{q.MaximumDepth}}</td>
+                  <td>{{q.CurrentDepth}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true">
+            </dir-pagination-controls>
+          </div>
+        </div>
         <!-- Queue Status Block End-->
 
         <!-- Channel Status Block -->
         <div class="row" ng-if="valueReveal" id="channelStatusBlock">
 
-            <div class="col-lg-6" ng-if="openChn">
-                <rd-widget>
-                    <div class="widget">
-                      <rd-widget-header icon="fa-tasks" title="Channel Stats" class="ng-scope ng-isolate-scope"></rd-widget-header>
-                      <rd-widget-body classes="medium no-padding" class="ng-scope ng-isolate-scope">
-                        <div class="widget-body medium no-padding" ng-class="classes">
-                          <rd-loading ng-show="loading" class="ng-hide">
-                            <div class="loading">
-                              <div class="double-bounce1"></div>
-                              <div class="double-bounce2"></div>
-                            </div>
-                          </rd-loading>
-                        <div ng-hide="loading" class="widget-content">
-                          <div class="table-responsive ng-scope">
-                            <table class="table">
-                              <!--<tbody ng-repeat="(key, dataSet) in channelStats">-->
-                              <tbody>
-                                  <!-- <tr>
-                                      <td>Inhibition</td>
-                                      <td>True</td>
-                                      <td><button class="bttn-gradient bttn-md bttn-primary">Allow</button></td>
-                                      <td><button ng-click="openModal('custom-modal-1')">Open Modal 1</button></td>
-                                    </tr> -->
-                                <tr ng-repeat="(key2,value) in channelStats">
-                                  <td>{{key2}}</td>
-                                  <td>{{value}}</td>
-                                  <!-- <td><span class="text-success"><i class="fa fa-check"></i></span></td> -->
-                                </tr>	
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
+          <div class="col-lg-6" ng-if="openChn">
+            <rd-widget>
+              <div class="widget">
+                <rd-widget-header icon="fa-tasks" title="Channel Stats" class="ng-scope ng-isolate-scope"></rd-widget-header>
+                <rd-widget-body classes="medium no-padding" class="ng-scope ng-isolate-scope">
+                  <div class="widget-body medium no-padding" ng-class="classes">
+                    <rd-loading ng-show="loading" class="ng-hide">
+                      <div class="loading">
+                        <div class="double-bounce1"></div>
+                        <div class="double-bounce2"></div>
                       </div>
-                    </rd-widget-body>
+                    </rd-loading>
+                    <div ng-hide="loading" class="widget-content">
+                      <div class="table-responsive ng-scope">
+                        <table class="table">
+                          <tbody>
+                            <tr ng-repeat="(key2,value) in channelStats">
+                              <td>{{key2}}</td>
+                              <td>{{value}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
                   </div>
-                </rd-widget>
+                </rd-widget-body>
               </div>
+            </rd-widget>
+          </div>
         </div>
         <!-- Channel Status Block End-->
 
         <!-- TroubleShoot Block -->
         <div class="row" ng-if="valueReveal && openTroub" id="troubleShootBlock">
 
-            <div class="col-lg-8" >
-                <rd-widget>
-                    <div class="widget">
-                      <rd-widget-header icon="fa-tasks" title="Problematic Queues" class="ng-scope ng-isolate-scope"></rd-widget-header>
-                      <rd-widget-body classes="medium no-padding" class="ng-scope ng-isolate-scope" style="height:auto">
-                        <div class="widget-body medium no-padding" ng-class="classes">
-                          <rd-loading ng-show="loading" class="ng-hide">
-                            <div class="loading">
-                              <div class="double-bounce1"></div>
-                              <div class="double-bounce2"></div>
-                            </div>
-                          </rd-loading>
-                        <div ng-hide="loading" class="widget-content">
-                          <div class="table-responsive ng-scope">
-                            <!--<h4 ng-if="pFlag && openTroub">Please report to IIB Support team</h4><br />-->
-                            <table class="table">
-                              <tbody>
-                              <!--<tbody  ng-repeat="(key, dataSet) in problemQueues>-->
-                                  <!-- <tr>
-                                      <td>Inhibition</td>
-                                      <td>True</td>
-                                      <td><button class="bttn-gradient bttn-md bttn-primary">Allow</button></td>
-                                      <td><button ng-click="openModal('custom-modal-1')">Open Modal 1</button></td>
-                                    </tr> -->
-                                    <tr>
-                                      <th>Queues for which Outgoing flow is Stopped (Get Inhibited)</th>
-                                    </tr>
-                                    <tr ng-repeat="qname in problemQueues track by $index">
-                                      <td>{{qname}}</td>
-                                      <td ng-if="getInhibitflag"><button class="bttn-gradient bttn-md bttn-primary" ng-click="allowQueueGet(qname)">Allow</button></td>
-                                      <!-- <td ng-show="test1!=null">{{value1}}</td> -->
-                                    </tr>	
-                                    <tr>
-                                      <th>Queues for which Incoming flow is Stopped (Put Inhibited)</th>
-                                    </tr>
-                                    <tr ng-repeat="qname in problemPutQueues track by $index">
-                                      <td>{{qname}}</td>
-                                      <td ng-if="putInhibitflag"><button class="bttn-gradient bttn-md bttn-primary" ng-click="allowQueuePut(qname)">Allow</button></td>
-                                      <!-- <td ng-show="test1!=null">{{value1}}</td> -->
-                                    </tr>	
-                                    <tr>
-                                        <th>Channels in Stopped State</th>
-                                      </tr>
-                                      <tr ng-repeat="chnl in channelsStopped track by $index">
-                                        <td>{{chnl}}</td>
-                                        <td ng-if="chnlStopped"><button class="bttn-gradient bttn-md bttn-primary" ng-click="restartChannel(chnl)">Start</button></td>
-                                        <!-- <td ng-show="test1!=null">{{value1}}</td> -->
-                                      </tr>	
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
+          <div class="col-lg-8">
+            <rd-widget>
+              <div class="widget">
+                <rd-widget-header icon="fa-tasks" title="Problematic Queues" class="ng-scope ng-isolate-scope"></rd-widget-header>
+                <rd-widget-body classes="medium no-padding" class="ng-scope ng-isolate-scope" style="height:auto">
+                  <div class="widget-body medium no-padding" ng-class="classes">
+                    <rd-loading ng-show="loading" class="ng-hide">
+                      <div class="loading">
+                        <div class="double-bounce1"></div>
+                        <div class="double-bounce2"></div>
                       </div>
-                    </rd-widget-body>
+                    </rd-loading>
+                    <div ng-hide="loading" class="widget-content">
+                      <div class="table-responsive ng-scope">
+                        <table class="table">
+                          <tbody>
+                            <tr>
+                              <th>Queues for which Outgoing flow is Stopped (Get Inhibited)</th>
+                            </tr>
+                            <tr ng-repeat="qname in problemQueues track by $index">
+                              <td>{{qname}}</td>
+                              <td ng-if="getInhibitflag"><button class="bttn-gradient bttn-md bttn-primary" ng-click="allowQueueGet(qname)">Allow</button></td>
+                            </tr>
+                            <tr>
+                              <th>Queues for which Incoming flow is Stopped (Put Inhibited)</th>
+                            </tr>
+                            <tr ng-repeat="qname in problemPutQueues track by $index">
+                              <td>{{qname}}</td>
+                              <td ng-if="putInhibitflag"><button class="bttn-gradient bttn-md bttn-primary" ng-click="allowQueuePut(qname)">Allow</button></td>
+                            </tr>
+                            <tr>
+                              <th>Channels in Stopped State</th>
+                            </tr>
+                            <tr ng-repeat="chnl in channelsStopped track by $index">
+                              <td>{{chnl}}</td>
+                              <td ng-if="chnlStopped"><button class="bttn-gradient bttn-md bttn-primary" ng-click="restartChannel(chnl)">Start</button></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
                   </div>
-                </rd-widget>
+                </rd-widget-body>
               </div>
+            </rd-widget>
+          </div>
         </div>
         <!-- TroubleShoot Block -->
 
-      </div><!-- End Page Content -->
-    </div><!-- End Content Wrapper -->
-  </div><!-- End Page Wrapper -->
+      </div>
+      <!-- End Page Content -->
+    </div>
+    <!-- End Content Wrapper -->
+  </div>
+  <!-- End Page Wrapper -->
 </body>
+
 </html>
