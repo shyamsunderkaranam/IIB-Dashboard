@@ -24,6 +24,7 @@
   <!-- Custom Scripts -->
   <script type="text/javascript" src="js/dashboard.min.js"></script>
   <script src="lib/js/dirPagination.js"></script>
+  <!--http://www.colorzilla.com/gradient-editor/-->
   <style>
     .selected {
       background-color: rgb(130, 90, 221);
@@ -32,13 +33,14 @@
     }
 
     .color-red {
-      background-color: rgb(255, 112, 77);
+      background: -webkit-linear-gradient(left, rgba(213,31,21,1) 0%,rgba(213,31,21,1) 5%,rgba(239,92,87,1) 23%,rgba(239,92,87,1) 23%,rgba(213,31,21,1) 38%,rgba(239,92,87,1) 49%,rgba(213,31,21,1) 59%,rgba(239,92,87,1) 78%,rgba(239,92,87,1) 78%,rgba(213,31,21,1) 93%);
       color: black;
       font-weight: bold;
+      
     }
 
-    .color-green {
-      background-color: greenyellow;
+    .color-blue {
+      background: -webkit-linear-gradient(left, rgba(54,144,240,1) 3%,rgba(109,179,242,1) 35%,rgba(84,163,238,1) 69%,rgba(30,105,222,1) 100%); 
       color: black;
       font-weight: bold;
     }
@@ -87,11 +89,9 @@
             </div>
             <div class="meta">
               <div class="page">
-                Dashboard
+                {{headerDispay}}
               </div>
-              <div class="breadcrumb-links">
-                Home / Dashboard
-              </div>
+              
             </div>
           </div>
         </div>
@@ -134,13 +134,13 @@
 
 
         <!-- Queue Status Block Start-->
-        <div class="col-lg-12" ng-if="valueReveal && propertiesShown">
+        <div class="col-lg-13" ng-if="valueReveal && propertiesShown">
           <div class="bs-component">
 
             <form class="form-inline">
-              <div class="form-group">
-                <label>Search</label>
-                <input type="text" ng-model="search" class="form-control" placeholder="Search">
+              <div class="form-group" align="right">
+                <label align="right">Search</label>
+                <input align="right" type="text" ng-model="search" class="form-control" placeholder="Search">
               </div>
             </form>
             <table class="table table-hover alert alert-info" ng-if="propertiesShown">
@@ -149,23 +149,23 @@
                   <th ng-click="sort('qName')">Queue Name
                     <span class="glyphicon sort-icon" ng-show="sortKey=='qName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                   </th>
-                  <th ng-click="sort('InhibitPut')">Incoming flow Stopped ?
+                  <th ng-click="sort('InhibitPut')">Incoming data Stopped ?
                     <span class="glyphicon sort-icon" ng-show="sortKey=='InhibitPut'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                   </th>
-                  <th ng-click="sort('InhibitGet')">Outgoing flow Stopped ?
+                  <th ng-click="sort('InhibitGet')">Outgoing data Stopped ?
                     <span class="glyphicon sort-icon" ng-show="sortKey=='InhibitGet'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                   </th>
-                  <th ng-click="sort('OpenInputCount')">No of Applns reading this Queue
+                  <th ng-click="sort('OpenInputCount')">No of Applications reading this Queue
                     <span class="glyphicon sort-icon" ng-show="sortKey=='OpenInputCount'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                   </th>
                   <th ng-click="sort('MaximumMessageLength')">Maximum Message Length
                     <span class="glyphicon sort-icon" ng-show="sortKey=='MaximumMessageLength'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                   </th>
 
-                  <th ng-click="sort('MaximumDepth')">Maximum Messages can be stored
+                  <th ng-click="sort('MaximumDepth')">Maximum Messages
                     <span class="glyphicon sort-icon" ng-show="sortKey=='MaximumDepth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                   </th>
-                  <th ng-click="sort('CurrentDepth')">No. of Messages Stuck in Queue
+                  <th ng-click="sort('CurrentDepth')">No. of Messages Stuck in the Queue
                     <span class="glyphicon sort-icon" ng-show="sortKey=='CurrentDepth'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                   </th>
 
@@ -173,7 +173,7 @@
               </thead>
               <tbody>
                 <tr ng-class="{'color-red': (q.InhibitPut === 'Yes' || q.InhibitGet === 'Yes' || q.OpenInputCount === 0 || q.CurrentDepth > 0), 
-                'color-green': (q.InhibitPut === 'No' && q.InhibitGet === 'No' && (q.OpenInputCount === 'Not Applicable' || q.OpenInputCount > 0) && (q.CurrentDepth === 'Not Applicable' || q.CurrentDepth === 0))}"
+                'color-blue': (q.InhibitPut === 'No' && q.InhibitGet === 'No' && (q.OpenInputCount === 'NA' || q.OpenInputCount > 0) && (q.CurrentDepth === 'NA' || q.CurrentDepth === 0))}"
                   dir-paginate="q in propertyValue|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
 
                   <td>{{q.qName}}</td>
@@ -186,7 +186,7 @@
                 </tr>
               </tbody>
             </table>
-            <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true">
+            <dir-pagination-controls max-size="15" direction-links="true" boundary-links="true">
             </dir-pagination-controls>
           </div>
         </div>
